@@ -1,10 +1,10 @@
 // ==UserScript==
-// @name        visa
+// @name        visa date
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @description  try to take over the world!
 // @author       You
-// @include       /https:\/\/cgifederal\.secure\.force\.com\/applicanthome/
+// @include       /https:\/\/cgifederal\.secure\.force\.com\/ApplicantHome/
 // @grant        none
 // ==/UserScript==
 
@@ -14,13 +14,18 @@
         setTimeout(()=>window.location.reload(),1000);
     }
     else{
-        if($(".leftPanelText")[0].innerText!=localStorage.getItem("date")){
-        window.open();
-             localStorage.setItem("date",$(".leftPanelText")[0].innerText);
-             setTimeout(()=>window.location.reload(),1000);
+
+        var currentDateOnPage=$(".leftPanelText")[0].innerText;
+        if(currentDateOnPage!=localStorage.getItem("date")){
+            var month=currentDateOnPage.split(" ")[5];
+            var date=parseInt(currentDateOnPage.split(" ")[6].split(',')[0]);
+            if(month=="May"&&date<22)
+               {window.open();}//my target
+             localStorage.setItem("date",currentDateOnPage);
+             setTimeout(()=>window.location.reload(),4000);
         }
         else{
-            setTimeout(()=>window.location.reload(),10*1000);
+            setTimeout(()=>window.location.reload(),20*1000);
         }
     }
 
